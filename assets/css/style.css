@@ -1,0 +1,17 @@
+body {
+    color:  white;
+    background-image: url(https://yanananan.github.io/Basic-Portfolio/assets/images/background.png);
+
+}
+.center {
+    width: 365px;
+    margin: 10px auto 10px auto;
+}
+
+.icon {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    border: 4px solid gray;
+    border-radius: 100%;
+}

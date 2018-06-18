@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+</head>
+<body>
+    <div class="center">
+        <span><img src="assets/images/higanbana_icon.png" alt="higanbana" class="icon" id="icon1"></span>
+        <span><img src="assets/images/susabi_icon.png" alt="susabi" class="icon" id="icon2"></span>
+        <span><img src="assets/images/ichimokuren_icon.png" alt="ichimokuren" class="icon" id="icon3"></span>
+        <span><img src="assets/images/ibaraki_icon.png" alt="ibaraki doji" class="icon" id="icon4"></span>
+    </div>
+    <div>    
+        <button class="character" id="character0"></button>
+        <button class="character" id="character1"></button>
+        <button class="character" id="character2"></button>
+        <button class="character" id="character3"></button>
+    </div>
+    <button id="performAttack">Attack</button>
+    <div>Attacker Health: <span id = "attackerHealth"></span></div>
+    <div><span id = "attackerMessage"></span></div>
+    <div>Defender Health: <span id = "defenderHealth"></span></div>
+    <div><span id = "defenderMessage"></span></div>
+    
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/javascript/game.js"></script>
+    <script type="text/javascript">
+        var characterList = [
+            {name: "Higanbana",
+            title: "the flower of death",
+            attackList: ["'s flowers spew forth poisonous pollen", "'s flowers unleash razor sharp petals", "'s flowers lash out thorny vines"],
+            defenseList: ["'s flower petals form a barrier", "'s flowers drain life from the enemy"],
+            health: 200,
+            attack: 7,
+            counter: 14,
+            status: "active"},
+
+            {name: "Susabi",
+            title: "the prophetic star",
+            attackList: [" summons a fiery comet", " hurls a barrage of star fragments", "'s eyes shine with cosmic light"],
+            defenseList: [" gathers star fragments around him", " radiates celestial energy"],
+            health: 100,
+            attack: 15,
+            counter: 30,
+            status: "active"},
+
+            {name: "Ichimokuren",
+            title: "the tempest dragon",
+            attackList: [" commands the wind to form countless blades", "'s dragon breathes out a tornado", "'s hand blasts out a shockwave"],
+            defenseList: [" fades into a cloud of mist", "'s dragon counterattacks"],
+            health: 150,
+            attack: 10,
+            counter: 20,
+            status: "active"},
+
+            {name: "Ibaraki Doji",
+            title: "the hand of hell",
+            attackList: [" shoots balls of black flames", " creates fissures that surge dark energy", "'s demons appear from portals"],
+            defenseList: ["'s demons swarms to protect him"," ignites his body with black flames"],
+            health: 120,
+            attack: 12,
+            counter: 24,
+            status: "active"}
+            ];
+        
+        for (i in characterList){
+        $("#character"+i).text(characterList[i].name);
+        }
+
+        var attacker, defender;
+        $(".character").on("click",function(){
+            // alert(attacker);
+            var characterNumber = $(this).attr("id");
+            if (attacker==null){
+                attacker = characterList[characterNumber.substring(9,10)]
+                console.log("attacker");
+                console.log(attacker);
+            } else {
+                if (defender==null){
+                    defender = characterList[characterNumber.substring(9,10)]
+                    console.log("defender");
+                    console.log(defender);
+                }
+            }
+        })
+        
+        $("#performAttack").on("click",function(){
+            //pick out random attack skill
+            var randomAttack = attacker.attackList[Math.floor(Math.random()*attacker.attackList.length)];
+            $("#attackerMessage").text(attacker.name+randomAttack+", dealing "+attacker.attack+" damage.");
+            //attack deals damage
+            defender.health = defender.health - attacker.attack;
+            
+            //attacker gets stronger
+            attacker.attack = attacker.attack + 10;
+            if (defender.health>0){
+                $("#defenderHealth").text(defender.health);
+                //pick out random defense skill
+                var randomDefense = defender.defenseList[Math.floor(Math.random()*defender.defenseList.length)];
+                $("#defenderMessage").text(defender.name+randomDefense+", returning "+defender.counter+" damage.");
+                //defender deals counter damage
+                attacker.health = attacker.health - defender.counter;
+                if (attacker.health>0){
+                    $("#attackerHealth").text(attacker.health);
+                } else {
+                    attacker.health = 0;//health shouldn't be negative
+                    $("#attackerHealth").text(attacker.health);
+                    attacker.status = "defeated";
+                }
+            } else {
+                defender.health = 0;//health shouldn't be negative
+                $("#defenderHealth").text(defender.health);
+                $("#defenderMessage").text(defender.name+" has been defeated.");
+                defender.status = "defeated";
+            }
+            
+            console.log("attacker");
+            console.log(attacker);
+            console.log("defender");
+            console.log(defender);
+        })
+    
+    </script>
+    
+    
+</body>
+</html>
