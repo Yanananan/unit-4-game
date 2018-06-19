@@ -3,18 +3,25 @@ body {
     background-image: url(https://yanananan.github.io/unit-4-game/assets/images/archesdark.png);
 
 }
+.center {
+    width: 960px;
+    height: 540px;
+    margin: auto;
+    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/susabi_background.jpg);
+    background-size: 960px 540px;
+}
 .centerHead {
     width: 365px;
     margin: 10px auto 10px auto;
 }
 
 .centerBody {
-    width: 768px;
-    height: 432px;
+    width: 960px;
+    height: 347px;
     margin: 10px auto 10px auto;
     border: 1px solid gray;
-    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/susabi_background.jpg);
-    background-size: 768px 432px;
+    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/background1.jpg);
+    background-size: 960px 347px;
 }
 
 .icon {
@@ -30,17 +37,18 @@ body {
 }
 
 #attackerDiv {
-    width: 100px;
-    height: 432px;
+    width: 0px;
+    height: 347px;
     border: 1px solid gray;
     float: left;
-    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/higanbana2.png);
-    background-size: auto 300px;
+    background-size: auto 347px;
     background-repeat: no-repeat;
 }
 #defenderDiv {
-    width: 100px;
-    height: 432px;
+    width: 0px;
+    height: 347px;
     border: 1px solid gray;
     float: right;
+    background-size: auto 347px;
+    background-repeat: no-repeat;
 }

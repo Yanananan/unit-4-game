@@ -9,22 +9,24 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
 </head>
 <body>
-    <div class="centerHead">
-        <img src="assets/images/higanbana_icon.png" alt="higanbana" class="icon" id="icon1">
-        <img src="assets/images/susabi_icon.png" alt="susabi" class="icon" id="icon2">
-        <img src="assets/images/ichimokuren_icon.png" alt="ichimokuren" class="icon" id="icon3">
-        <img src="assets/images/ibaraki_icon.png" alt="ibaraki doji" class="icon" id="icon4">
-    </div>
-    <div class="centerBody">
-        <div id="attackerDiv"></div>
-        <div id="centerPanel"></div>
-        <div id="defenderDiv"></div>
+    <div class="center">
+        <div class="centerHead">
+            <img src="assets/images/higanbana_icon.png" alt="higanbana" class="icon" id="character0">
+            <img src="assets/images/susabi_icon.png" alt="susabi" class="icon" id="character1">
+            <img src="assets/images/ichimokuren_icon.png" alt="ichimokuren" class="icon" id="character2">
+            <img src="assets/images/ibaraki_icon.png" alt="ibaraki doji" class="icon" id="character3">
+        </div>
+        <div class="centerBody">
+            <div id="attackerDiv"></div>
+            <div id="centerPanel"></div>
+            <div id="defenderDiv"></div>
+        </div>
     </div>
     <div>    
-        <button class="character" id="character0"></button>
+        <!-- <button class="character" id="character0"></button>
         <button class="character" id="character1"></button>
         <button class="character" id="character2"></button>
-        <button class="character" id="character3"></button>
+        <button class="character" id="character3"></button> -->
     </div>
     <button id="performAttack">Attack</button>
     <div>Attacker Health: <span id = "attackerHealth"></span></div>
@@ -46,7 +48,9 @@
             health: 200,
             attack: 7,
             counter: 14,
-            status: "active"},
+            status: "active",
+            picture: "higanbana.png",
+            direction: "left"},
 
             {name: "Susabi",
             title: "the prophetic star",
@@ -55,7 +59,9 @@
             health: 100,
             attack: 15,
             counter: 30,
-            status: "active"},
+            status: "active",
+            picture: "susabi.png",
+            direction: "right"},
 
             {name: "Ichimokuren",
             title: "the tempest dragon",
@@ -64,7 +70,9 @@
             health: 150,
             attack: 10,
             counter: 20,
-            status: "active"},
+            status: "active",
+            picture: "ichimokuren.png",
+            direction: "n/a"},
 
             {name: "Ibaraki Doji",
             title: "the hand of hell",
@@ -73,7 +81,9 @@
             health: 120,
             attack: 12,
             counter: 24,
-            status: "active"}
+            status: "active",
+            picture: "ibaraki.png",
+            direction: "n/a"}
             ];
         
         for (i in characterList){
@@ -81,7 +91,7 @@
         }
 
         var attacker, defender;
-        $(".character").on("click",function(){
+        $(".icon").on("click",function(){
             // alert(attacker);
             var characterNumber = $(this).attr("id");
             if (attacker==null){
@@ -93,6 +103,18 @@
                     defender = characterList[characterNumber.substring(9,10)]
                     console.log("defender");
                     console.log(defender);
+                }
+            }
+            if ((attacker!=null) && (defender!=null)){
+                $("#attackerDiv").css("width","414px");
+                $("#attackerDiv").css("background-image","url(assets/images/"+attacker.picture+")");
+                if(attacker.direction=="left"){
+                    $("#attackerDiv").css("transform","scaleX(-1)");//flip direction of picture so attacker faces defender
+                }
+                $("#defenderDiv").css("width","414px");
+                $("#defenderDiv").css("background-image","url(assets/images/"+defender.picture+")");
+                if(defender.direction=="right"){
+                    $("#defenderDiv").css("transform","scaleX(-1)");//flip direction of picture so defender faces attacker
                 }
             }
         })
