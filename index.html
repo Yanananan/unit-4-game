@@ -9,33 +9,32 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
 </head>
 <body>
-    <div class="center">
-        <div class="centerHead">
-            <img src="assets/images/higanbana_icon.png" alt="higanbana" class="icon" id="character0">
-            <img src="assets/images/susabi_icon.png" alt="susabi" class="icon" id="character1">
-            <img src="assets/images/ichimokuren_icon.png" alt="ichimokuren" class="icon" id="character2">
-            <img src="assets/images/ibaraki_icon.png" alt="ibaraki doji" class="icon" id="character3">
+    <div id="center">
+        <div id="centerHead">
+            
+            <div id="iconArea">
+                <img src="assets/images/higanbana_icon.png" alt="higanbana" class="icon charIcon" id="0">
+                <img src="assets/images/susabi_icon.png" alt="susabi" class="icon charIcon" id="1">
+                <img src="assets/images/ichimokuren_icon.png" alt="ichimokuren" class="icon charIcon" id="2">
+                <img src="assets/images/ibaraki_icon.png" alt="ibaraki doji" class="icon charIcon" id="3">
+            </div>
+            
         </div>
-        <div class="centerBody">
+        <div id="centerBody">
             <div id="attackerDiv"></div>
-            <div id="centerPanel"></div>
+            <div id="centerPanel">
+                <div class="HP" id="attackerHealth"></div>
+                <img src="assets/images/attack_icon.png" alt="attack" class="icon" id="performAction">
+                <div class="HP" id="defenderHealth"></div>
+            </div>
             <div id="defenderDiv"></div>
         </div>
+        <div>
+            <div class="message" id="message0"></div>
+            <div class="message" id="message1"></div>
+            <div class="message" id="message2"></div>
+        </div>
     </div>
-    <div>    
-        <!-- <button class="character" id="character0"></button>
-        <button class="character" id="character1"></button>
-        <button class="character" id="character2"></button>
-        <button class="character" id="character3"></button> -->
-    </div>
-    <button id="performAttack">Attack</button>
-    <div>Attacker Health: <span id = "attackerHealth"></span></div>
-    <div><span id = "attackerMessage"></span></div>
-    <div>Defender Health: <span id = "defenderHealth"></span></div>
-    <div><span id = "defenderMessage"></span></div>
-    
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="assets/javascript/game.js"></script>
@@ -43,10 +42,13 @@
         var characterList = [
             {name: "Higanbana",
             title: "the flower of death",
+            info: "She lives at the edge of the abyss; the sea of red flowers that grow there are her only friends...",
             attackList: ["'s flowers spew forth poisonous pollen", "'s flowers unleash razor sharp petals", "'s flowers lash out thorny vines"],
             defenseList: ["'s flower petals form a barrier", "'s flowers drain life from the enemy"],
             health: 200,
+            maxHealth: 200,
             attack: 7,
+            startingAttack: 7,
             counter: 14,
             status: "active",
             picture: "higanbana.png",
@@ -54,10 +56,13 @@
 
             {name: "Susabi",
             title: "the prophetic star",
+            info: "A figure of mystery, he observes the stars to fortell all events within the universe...",
             attackList: [" summons a fiery comet", " hurls a barrage of star fragments", "'s eyes shine with cosmic light"],
             defenseList: [" gathers star fragments around him", " radiates celestial energy"],
             health: 100,
+            maxHealth: 100,
             attack: 15,
+            startingAttack: 15,
             counter: 30,
             status: "active",
             picture: "susabi.png",
@@ -65,10 +70,13 @@
 
             {name: "Ichimokuren",
             title: "the tempest dragon",
+            info: "Though abandoned by his followers, he continues to protect the land from misfortune...",
             attackList: [" commands the wind to form countless blades", "'s dragon breathes out a tornado", "'s hand blasts out a shockwave"],
             defenseList: [" fades into a cloud of mist", "'s dragon counterattacks"],
             health: 150,
+            maxHealth: 150,
             attack: 10,
+            startingAttack: 10,
             counter: 20,
             status: "active",
             picture: "ichimokuren.png",
@@ -76,77 +84,188 @@
 
             {name: "Ibaraki Doji",
             title: "the hand of hell",
+            info: "His power is only outmatched by his hatred; the memory of his severed arm cannot be forgotten...",
             attackList: [" shoots balls of black flames", " creates fissures that surge dark energy", "'s demons appear from portals"],
             defenseList: ["'s demons swarms to protect him"," ignites his body with black flames"],
             health: 120,
+            maxHealth: 120,
             attack: 12,
+            startingAttack: 12,
             counter: 24,
             status: "active",
             picture: "ibaraki.png",
             direction: "n/a"}
-            ];
+        ];
         
-        for (i in characterList){
-        $("#character"+i).text(characterList[i].name);
+        var battleLog=["","",""];
+
+        function displayMessage(message){ //displays battle text in a scrolling fashion.  i tried playing around with fadeIn but it doesn't produce the scrolling effect i want..
+            if (battleLog[0]==""){
+                battleLog[0]=message;
+            } else if (battleLog[1]==""){
+                battleLog[1]=message;
+            } else if (battleLog[2]==""){
+                battleLog[2]=message;
+            } else {
+                battleLog[0]=battleLog[1];
+                battleLog[1]=battleLog[2];
+                battleLog[2]=message;
+            }
+            $("#message0").text(battleLog[0]);
+            $("#message1").text(battleLog[1]);
+            $("#message2").text(battleLog[2]);
         }
 
-        var attacker, defender;
-        $(".icon").on("click",function(){
-            // alert(attacker);
-            var characterNumber = $(this).attr("id");
-            if (attacker==null){
-                attacker = characterList[characterNumber.substring(9,10)]
-                console.log("attacker");
-                console.log(attacker);
-            } else {
-                if (defender==null){
-                    defender = characterList[characterNumber.substring(9,10)]
-                    console.log("defender");
-                    console.log(defender);
-                }
+        function resetGame(){
+            for (var i in characterList) {
+                characterList[i].health=characterList[i].maxHealth;
+                characterList[i].attack=characterList[i].startingAttack;
+                characterList[i].status="active";
             }
-            if ((attacker!=null) && (defender!=null)){
-                $("#attackerDiv").css("width","414px");
+            battleLog=["","",""];
+            $("#message0").text(battleLog[0]);
+            $("#message1").text(battleLog[1]);
+            $("#message2").text(battleLog[2]);
+        }
+
+
+        var attacker, defender;
+        var lastBackground=-1;
+        var randomBackground=-1;
+        var message="";
+        var iconAreaWidth;
+        var gameStatus="continue";
+        var attackerTransformed, defenderTransformed;
+        var attackerIndex;
+        
+        $(".charIcon").on("click",function(){
+            var characterNumber = $(this).attr("id");
+            if ((attacker!=null) && (defender!=null)){//new enemy cannot be selected until current enemy is defeated
+                displayMessage("An enemy is already present!");
+            }
+            if (attacker==null){
+                //positions attacker on screen and display info
+                attacker = characterList[characterNumber];
+                attackerIndex=characterNumber;//remembers which character is the attacker
                 $("#attackerDiv").css("background-image","url(assets/images/"+attacker.picture+")");
+                $("#attackerDiv").css("visibility","visible");
                 if(attacker.direction=="left"){
                     $("#attackerDiv").css("transform","scaleX(-1)");//flip direction of picture so attacker faces defender
+                    attackerTransformed=true;
                 }
-                $("#defenderDiv").css("width","414px");
-                $("#defenderDiv").css("background-image","url(assets/images/"+defender.picture+")");
-                if(defender.direction=="right"){
-                    $("#defenderDiv").css("transform","scaleX(-1)");//flip direction of picture so defender faces attacker
+                $("#attackerHealth").text(attacker.health);
+                $("#attackerHealth").css("visibility","visible");
+                displayMessage(attacker.name+", "+attacker.title+".");
+                displayMessage(attacker.info);
+                
+                //removes icon from view
+                $(this).css("visibility","hidden");
+                
+            } else {
+                if (defender==null){
+                    //positions defender on screen and display info
+                    defender = characterList[characterNumber];
+                    $("#defenderDiv").css("background-image","url(assets/images/"+defender.picture+")");
+                    $("#defenderDiv").css("visibility","visible");
+                    if(defender.direction=="right"){
+                        $("#defenderDiv").css("transform","scaleX(-1)");//flip direction of picture so defender faces attacker
+                        defenderTransformed=true;
+                    }
+                    $("#defenderHealth").text(defender.health);
+                    $("#defenderHealth").css("visibility","visible");
+                    displayMessage(defender.name+", "+defender.title+".");
+                    displayMessage(defender.info);
+                    displayMessage("The battle begins!");
+
+                    //removes icon from view
+                    $(this).css("visibility","hidden");
+
+                    //ensures the background does not repeat consecutively
+                    while (lastBackground==randomBackground){
+                    randomBackground=Math.floor(Math.random()*6);
+                    }
+                    $("#centerBody").css("background-image","url(assets/images/background"+randomBackground+".jpg)");
+                    lastBackground=randomBackground;
                 }
+            }
+            if ((attacker!=null) && (defender!=null)){//activate attack button
+                $("#performAction").css("visibility","visible");
+                $("#performAction").attr("src","assets/images/attack_icon.png");
             }
         })
         
-        $("#performAttack").on("click",function(){
-            //pick out random attack skill
-            var randomAttack = attacker.attackList[Math.floor(Math.random()*attacker.attackList.length)];
-            $("#attackerMessage").text(attacker.name+randomAttack+", dealing "+attacker.attack+" damage.");
-            //attack deals damage
-            defender.health = defender.health - attacker.attack;
-            
-            //attacker gets stronger
-            attacker.attack = attacker.attack + 10;
-            if (defender.health>0){
-                $("#defenderHealth").text(defender.health);
-                //pick out random defense skill
-                var randomDefense = defender.defenseList[Math.floor(Math.random()*defender.defenseList.length)];
-                $("#defenderMessage").text(defender.name+randomDefense+", returning "+defender.counter+" damage.");
-                //defender deals counter damage
-                attacker.health = attacker.health - defender.counter;
-                if (attacker.health>0){
-                    $("#attackerHealth").text(attacker.health);
+        $("#performAction").on("click",function(){
+            if (gameStatus=="continue"){
+                //pick out random attack skill
+                var randomAttack = attacker.attackList[Math.floor(Math.random()*attacker.attackList.length)];
+                displayMessage(attacker.name+randomAttack+", dealing "+attacker.attack+" damage.");
+                //attack deals damage
+                defender.health = defender.health - attacker.attack;
+                //attacker gets stronger
+                attacker.attack = attacker.attack + 10;
+                if (defender.health>0){
+                    $("#defenderHealth").text(defender.health);
+                    //pick out random defense skill
+                    var randomDefense = defender.defenseList[Math.floor(Math.random()*defender.defenseList.length)];
+                    displayMessage(defender.name+randomDefense+", returning "+defender.counter+" damage.");
+                    //defender deals counter damage
+                    attacker.health = attacker.health - defender.counter;
+                    if (attacker.health>0){
+                        $("#attackerHealth").text(attacker.health);
+                    } else {
+                        attacker.health = 0;//health shouldn't be negative
+                        $("#attackerHealth").text(attacker.health);
+                        displayMessage("You have been defeated. Revive and try again!");
+                        attacker.status = "used";
+                        gameStatus = "lose";
+                        $("#performAction").attr("src","assets/images/lose_icon.png");
+                        attacker=null;
+                        defender=null;
+                    }
                 } else {
-                    attacker.health = 0;//health shouldn't be negative
-                    $("#attackerHealth").text(attacker.health);
-                    attacker.status = "defeated";
+                    defender.health = 0;//health shouldn't be negative
+                    $("#defenderHealth").text(defender.health);
+                    displayMessage(defender.name+" has been defeated.");
+                    defender.status = "used";
+                    defender=null;
+                    $("#performAction").css("visibility","hidden");
+                    $("#defenderDiv").css("visibility","hidden");
+                    if (defenderTransformed){
+                        $("#defenderDiv").css("transform","scaleX(1)");
+                    }
+                    $("#defenderHealth").css("visibility","hidden");
+
+                    var totalEnemyHP = 0;//check for win
+                    for (var i in characterList){
+                        if (i != attackerIndex){//excluding the attacker, add up all enemy HP
+                            totalEnemyHP = totalEnemyHP + characterList[i].health;
+                        }
+                    }
+                    if (totalEnemyHP == 0){
+                        gameStatus="win";
+                        $("#performAction").attr("src","assets/images/win_icon.png");
+                        $("#performAction").css("visibility","visible");
+                        displayMessage(attacker.name+" is victorious. Refresh and try a different character!");
+                        attacker=null;
+                        defender=null;
+                    }
                 }
+                
             } else {
-                defender.health = 0;//health shouldn't be negative
-                $("#defenderHealth").text(defender.health);
-                $("#defenderMessage").text(defender.name+" has been defeated.");
-                defender.status = "defeated";
+                $(".charIcon").css("visibility","visible");
+                $("#performAction").css("visibility","hidden");
+                $("#attackerDiv").css("visibility","hidden");
+                if (attackerTransformed){
+                    $("#attackerDiv").css("transform","scaleX(1)");
+                }
+                $("#defenderDiv").css("visibility","hidden");
+                if (defenderTransformed){
+                    $("#defenderDiv").css("transform","scaleX(1)");
+                }
+                $("#attackerHealth").css("visibility","hidden");
+                $("#defenderHealth").css("visibility","hidden");
+                gameStatus="continue";
+                resetGame();
             }
             
             console.log("attacker");
@@ -154,7 +273,6 @@
             console.log("defender");
             console.log(defender);
         })
-    
     </script>
     
     

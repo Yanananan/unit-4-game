@@ -1,28 +1,34 @@
 body {
     color:  white;
+    font-family: Verdana, Arial, sans-serif;
     background-image: url(https://yanananan.github.io/unit-4-game/assets/images/archesdark.png);
 
 }
-.center {
+
+#center {
     width: 960px;
-    height: 540px;
-    margin: auto;
-    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/susabi_background.jpg);
-    background-size: 960px 540px;
+    /* height: 362px; */
+    border: 1px solid gray;
+    margin: 15px auto auto auto;
 }
-.centerHead {
-    width: 365px;
+#centerHead{
+    height: 100px;
+}
+#iconArea {
+    width: 370px;
     margin: 10px auto 10px auto;
 }
 
-.centerBody {
+#centerBody {
     width: 960px;
-    height: 347px;
-    margin: 10px auto 10px auto;
-    border: 1px solid gray;
-    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/background1.jpg);
-    background-size: 960px 347px;
+    height: 262px;
+    margin: 0px auto 0px auto;
+    /* border: 1px solid gray; */
+    background-size: 960px 262px;
+    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/default.jpg);
+    position: relative;
 }
+
 
 .icon {
     width: 80px;
@@ -31,24 +37,55 @@ body {
     border: 4px solid gray;
     border-radius: 100%;
 }
+
 .background {
     width: 768px;
     height: 432px;
 }
 
 #attackerDiv {
-    width: 0px;
-    height: 347px;
-    border: 1px solid gray;
+    width: 313px;
+    height: 262px;
     float: left;
-    background-size: auto 347px;
+    background-size: auto 262px;
     background-repeat: no-repeat;
 }
+#centerPanel {
+    width: 334px;
+    height: 262px;
+    float: left;
+}
 #defenderDiv {
-    width: 0px;
-    height: 347px;
-    border: 1px solid gray;
+    width: 313px;
+    height: 262px;
     float: right;
-    background-size: auto 347px;
+    background-size: auto 262px;
     background-repeat: no-repeat;
+}
+
+
+
+#performAction {
+    position: absolute;
+    top: 90px;
+    left: 436px;
+    visibility: hidden;
+}
+#attackerHealth {
+    font-size: 20px;
+    position: absolute;
+    top: 120px;
+    left: 370px;
+}
+#defenderHealth {
+    font-size: 20px;
+    position: absolute;
+    top: 120px;
+    left: 560px;
+}
+.message {
+    width: 960px;
+    height: 2em;
+    text-align: center;
+    vertical-align: middle;
 }
