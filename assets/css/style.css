@@ -7,7 +7,6 @@ body {
 
 #center {
     width: 960px;
-    /* height: 362px; */
     border: 1px solid gray;
     margin: 15px auto auto auto;
 }
@@ -15,7 +14,7 @@ body {
     height: 100px;
 }
 #iconArea {
-    width: 370px;
+    width: 464px;
     margin: 10px auto 10px auto;
 }
 
@@ -23,9 +22,7 @@ body {
     width: 960px;
     height: 262px;
     margin: 0px auto 0px auto;
-    /* border: 1px solid gray; */
     background-size: 960px 262px;
-    background-image: url(https://yanananan.github.io/unit-4-game/assets/images/default.jpg);
     position: relative;
 }
 
@@ -62,8 +59,13 @@ body {
     background-size: auto 262px;
     background-repeat: no-repeat;
 }
-
-
+#toolTip {
+    width: 334px;
+    height: 100px;
+    font-style: italic;
+    visibility: hidden;
+    padding: 10px 0px 0px 0px;
+}
 
 #performAction {
     position: absolute;
