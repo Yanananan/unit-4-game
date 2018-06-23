@@ -7,9 +7,10 @@ body {
 
 #center {
     width: 960px;
+    margin: 100px auto auto auto;
     border: 1px solid gray;
-    margin: 15px auto auto auto;
 }
+
 #centerHead{
     height: 100px;
 }

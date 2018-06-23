@@ -97,7 +97,7 @@ function resetGame(){
         characterList[i].health=characterList[i].maxHealth;
         characterList[i].attack=characterList[i].startingAttack;
     }
-    displayMessage("Hove over the icons to learn about the characters.");
+    displayMessage("Hover over the icons to learn about the characters.");
     displayMessage("Select an icon to pick your character.");
     displayMessage("Select another icon and let the battle begin!")
 }
