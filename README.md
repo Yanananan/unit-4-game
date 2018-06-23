@@ -8,6 +8,4 @@ This game utilizes class-taught subjects such as:
 -using jquery to alter css
 
 Todo list:
-which portfolio to link to? we created 3 portfolios
-health and damage numbers need balance
-scrolling effect?
+scrolling effect

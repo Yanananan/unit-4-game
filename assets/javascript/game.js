@@ -7,9 +7,9 @@ var characterList = [
     defenseList: ["'s flower petals form a barrier", "'s flowers drain life from the enemy"],
     health: 200,
     maxHealth: 200,
-    attack: 7,
-    startingAttack: 7,
-    counter: 14,
+    attack: 10,
+    startingAttack: 10,
+    counter: 10,
     picture: "higanbana.png",
     direction: "left"},
 
@@ -21,9 +21,9 @@ var characterList = [
     defenseList: [" gathers star fragments around him", " radiates celestial energy"],
     health: 100,
     maxHealth: 100,
-    attack: 15,
-    startingAttack: 15,
-    counter: 30,
+    attack: 30,
+    startingAttack: 30,
+    counter: 60,
     picture: "susabi.png",
     direction: "right"},
 
@@ -33,11 +33,11 @@ var characterList = [
     entrance: '"The wind sings of your defeat... My dragon, lend me your strength!"',
     attackList: [" forms countless blades from pressurized air", "'s dragon breathes out a tornado", " releases an intense shockwave"],
     defenseList: [" blows his opponent back with the wave of hand", "'s dragon counterattacks"],
-    health: 150,
-    maxHealth: 150,
-    attack: 10,
-    startingAttack: 10,
-    counter: 20,
+    health: 180,
+    maxHealth: 180,
+    attack: 15,
+    startingAttack: 15,
+    counter: 15,
     picture: "ichimokuren.png",
     direction: "n/a"},
 
@@ -47,11 +47,11 @@ var characterList = [
     entrance: '"Be grateful. Bearing witness to my wrath before death is the best gift you can ever deserve."',
     attackList: [" shoots balls of black flames", " creates fissures that surge dark energy", "'s demons appear from the shadows"],
     defenseList: ["'s demons swarms to protect him"," ignites his body with black flames"],
-    health: 120,
-    maxHealth: 120,
-    attack: 12,
-    startingAttack: 12,
-    counter: 24,
+    health: 150,
+    maxHealth: 150,
+    attack: 20,
+    startingAttack: 20,
+    counter: 25,
     picture: "ibaraki.png",
     direction: "n/a"},
 
@@ -63,9 +63,9 @@ var characterList = [
     defenseList: ["'s Monkey Mask snaps in retaliation","'s Devil Mask filled her with murderous intent"],
     health: 120,
     maxHealth: 120,
-    attack: 12,
-    startingAttack: 12,
-    counter: 24,
+    attack: 25,
+    startingAttack: 25,
+    counter: 40,
     picture: "menreiki.png",
     direction: "left"}
 
@@ -249,11 +249,12 @@ $("#performAction").on("click",function(){
         }
         
     } else {
+        //if game state is not "battle", then the character icons should be available and this button should be invisible
         $(".charIcon").css("visibility","visible");
         $("#performAction").css("visibility","hidden");
         $("#attackerDiv").css("visibility","hidden");
         if (attackerTransformed){
-            $("#attackerDiv").css("transform","scaleX(1)");
+            $("#attackerDiv").css("transform","scaleX(1)");//also need to turn the reflections back to original orientation
         }
         $("#defenderDiv").css("visibility","hidden");
         if (defenderTransformed){
